@@ -80,8 +80,6 @@
   margin: 0 auto;
 }
 
-/* modal.css */
-
 .modal {
   display: none;
   position: fixed;
@@ -106,12 +104,34 @@
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #2e3837;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   max-width: 80%;
   width: 400px;
+  color: #DCEDFF;
+  display: grid;
 }
 
+.SubmitButton {
+  background-color: #2E3837;
+    border: 1px solid #8F91A2;
+    border-radius: 5px;
+    height: 34px;
+    font-size: larger;
+    color: #DCEDFF;
+    text-align: center;
+    width: 83px;
+    margin: 0 auto;
+}
 
+.TextField {
+  background-color: #2E3837;
+  border: 1px solid #8F91A2;
+  border-radius: 5px;
+  height: 30px;
+  color: #DCEDFF;
+  text-align: center;
+  margin: 10px;
+}

@@ -19,6 +19,7 @@ const generateFoodPosition = () => {
   const y = Math.floor(Math.random() * GRID_HEIGHT);
   return { x, y };
 };
+
 const GameLayout = () => {
   const [highScores, setHighScores] = React.useState<Array<any>>([]);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
@@ -29,6 +30,7 @@ const GameLayout = () => {
   const [gameOver, setGameOver] = React.useState(false);
   const [currentScore, setCurrentScore] = React.useState(0);
   const [startGame, setStartGame] = React.useState(false);
+  const [isChangingDirection, setIsChangingDirection] = React.useState(false);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -50,14 +52,23 @@ const GameLayout = () => {
   React.useEffect(() => {
     if (gameOver) {
       const scores = localStorage.getItem("scores");
-      if (scores && scores.length > 0) {
+      const newScore = { userName, score: currentScore };
+      
+      if (scores) {
+        const highScores = JSON.parse(scores);
+        highScores.push(newScore); 
+        highScores.sort((a: any, b: any) => b.score - a.score);
+        const top3HighScores = highScores.slice(0, 3); 
+        setHighScores(top3HighScores);
+        localStorage.setItem("scores", JSON.stringify(top3HighScores));
       } else {
-        const scores = [{ userName, score: currentScore }];
+        const scores = [newScore];
         setHighScores(scores);
         localStorage.setItem("scores", JSON.stringify(scores));
       }
     }
   }, [gameOver]);
+  
 
   const updateGame = React.useCallback(() => {
     if (gameOver) return;
@@ -95,18 +106,36 @@ const GameLayout = () => {
 
   React.useEffect(() => {
     const handleKeyDown = (event: any) => {
+      if (isChangingDirection) return; // Exit if direction is already changing
+
       switch (event.key) {
         case "ArrowUp":
-          if (direction !== "DOWN") setDirection("UP");
+          if (direction !== "DOWN") {
+            setIsChangingDirection(true); // Set the flag
+            setDirection("UP");
+            setTimeout(() => setIsChangingDirection(false), 50); // Clear the flag after a delay
+          }
           break;
         case "ArrowDown":
-          if (direction !== "UP") setDirection("DOWN");
+          if (direction !== "UP") {
+            setIsChangingDirection(true);
+            setDirection("DOWN");
+            setTimeout(() => setIsChangingDirection(false), 50);
+          }
           break;
         case "ArrowLeft":
-          if (direction !== "RIGHT") setDirection("LEFT");
+          if (direction !== "RIGHT") {
+            setIsChangingDirection(true);
+            setDirection("LEFT");
+            setTimeout(() => setIsChangingDirection(false), 50);
+          }
           break;
         case "ArrowRight":
-          if (direction !== "LEFT") setDirection("RIGHT");
+          if (direction !== "LEFT") {
+            setIsChangingDirection(true);
+            setDirection("RIGHT");
+            setTimeout(() => setIsChangingDirection(false), 50);
+          }
           break;
         default:
           break;
@@ -118,14 +147,15 @@ const GameLayout = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [direction]);
+  }, [direction, isChangingDirection]);
 
   React.useEffect(() => {
     if (startGame) {
-      const gameInterval = setInterval(updateGame, 150);
+      const intervalDuration = 150 - Math.floor(currentScore / 50) * 50;
+      const gameInterval = setInterval(updateGame, intervalDuration);
       return () => clearInterval(gameInterval);
     }
-  }, [updateGame, startGame]);
+  }, [updateGame, startGame, currentScore]);
 
   const checkCollision = (newHead: any) => {
     if (
@@ -146,8 +176,8 @@ const GameLayout = () => {
       setHighScores(JSON.parse(scores));
     }
   }, []);
-  const Game = (props: { snake: any; startGame: any; gameOver: any }) => {
-    const { snake, startGame, gameOver } = props;
+  const Game = (props: { snake: any; gameOver: any }) => {
+    const { snake, gameOver } = props;
     // Update game logic
 
     return (
@@ -194,14 +224,14 @@ const GameLayout = () => {
       <div>
         <div className="Currentscore">{currentScore}</div>
         <div className="GameWrapper">
-          <Game startGame={startGame} snake={snake} gameOver={gameOver} />
+          <Game snake={snake} gameOver={gameOver} />
         </div>
       </div>
       <div>
         <div className="Scoreboard">
           SCORE BOARD
           {highScores.map((item) => {
-            return <p>{`-  ${item?.userName|| ''}   ${item.score|| ''}`}</p>;
+            return <p>{`-  ${item?.userName || ""}   ${item.score || ""}`}</p>;
           })}
         </div>
         <div>
