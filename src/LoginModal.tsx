@@ -22,9 +22,8 @@ const LoginModal = (props: ILoginModalProps) => {
   return (
     <div className={`modal ${isOpen ? "open" : "closed"}`}>
       <div className="modal-content">
-        <h2>Enter your Name</h2>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
-        <button onClick={handleSubmit}>Submit</button>
+        <input type="text" value={inputValue} onChange={handleInputChange} placeholder="Type your name"  className="TextField"/>
+        <button onClick={handleSubmit} className="SubmitButton">Submit</button>
       </div>
     </div>
   );
