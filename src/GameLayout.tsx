@@ -38,7 +38,6 @@ const GameLayout = () => {
 
   const handleModalSubmit = (inputValue: any) => {
     setUserName(inputValue);
-    console.log(inputValue);
   };
 
   const resetGame = () => {
@@ -106,14 +105,14 @@ const GameLayout = () => {
 
   React.useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (isChangingDirection) return; // Exit if direction is already changing
+      if (isChangingDirection) return; 
 
       switch (event.key) {
         case "ArrowUp":
           if (direction !== "DOWN") {
-            setIsChangingDirection(true); // Set the flag
+            setIsChangingDirection(true); 
             setDirection("UP");
-            setTimeout(() => setIsChangingDirection(false), 50); // Clear the flag after a delay
+            setTimeout(() => setIsChangingDirection(false), 50); 
           }
           break;
         case "ArrowDown":
@@ -191,7 +190,6 @@ const GameLayout = () => {
             position: "relative",
           }}
         >
-          {/* Render the grid */}
           {Array.from({ length: GRID_HEIGHT }).map((_, rowIndex) =>
             Array.from({ length: GRID_WIDTH }).map((_, colIndex) => (
               <div
