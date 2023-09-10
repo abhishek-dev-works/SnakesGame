@@ -31,8 +31,9 @@
   font-family: fantasy;
   font-size: large;
   width: 24vw;
-  height: 20vh;
+  min-height: 20vh;
   line-height: 2;
+  margin: 0 auto;
 }
 
 .Headings {
@@ -45,6 +46,8 @@
   height: 50px;
   background-color: white;
   line-height: 3;
+  border-radius: 10px;
+  border: 1px solid #80808094;
 }
 
 .FlexConntainer {
@@ -110,28 +113,36 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   max-width: 80%;
   width: 400px;
-  color: #DCEDFF;
+  color: #dcedff;
   display: grid;
 }
 
 .SubmitButton {
-  background-color: #2E3837;
-    border: 1px solid #8F91A2;
-    border-radius: 5px;
-    height: 34px;
-    font-size: larger;
-    color: #DCEDFF;
-    text-align: center;
-    width: 83px;
-    margin: 0 auto;
+  background-color: #2e3837;
+  border: 1px solid #8f91a2;
+  border-radius: 5px;
+  height: 34px;
+  font-size: larger;
+  color: #dcedff;
+  text-align: center;
+  width: 83px;
+  margin: 0 auto;
 }
 
 .TextField {
-  background-color: #2E3837;
-  border: 1px solid #8F91A2;
+  background-color: #2e3837;
+  border: 1px solid #8f91a2;
   border-radius: 5px;
   height: 30px;
-  color: #DCEDFF;
+  color: #dcedff;
   text-align: center;
   margin: 10px;
+}
+
+.GameOverText {
+  color: #c71010;
+  font-weight: bold;
+  font-family: cursive;
+  margin-block: unset;
+  font-size: x-large;
 }

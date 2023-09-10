@@ -4,9 +4,9 @@ import "./App.css";
 import logo from "./assets/images/logo.svg";
 import LoginModal from "./LoginModal";
 
-const CELL_SIZE = 10; // Size of each grid cell
-const GRID_WIDTH = 40; // Number of grid cells in the width
-const GRID_HEIGHT = 40; // Number of grid cells in the height
+const CELL_SIZE = 15; // Size of each grid cell
+const GRID_WIDTH = 30; // Number of grid cells in the width
+const GRID_HEIGHT = 30; // Number of grid cells in the height
 const INITIAL_SNAKE_SIZE = [
   { x: 5, y: 5 },
   { x: 4, y: 5 },
@@ -72,7 +72,6 @@ const GameLayout = () => {
   const updateGame = React.useCallback(() => {
     if (gameOver) return;
 
-    // Calculate the new head position
     const head = { ...snake[0] };
     switch (direction) {
       case "UP":
@@ -177,11 +176,10 @@ const GameLayout = () => {
   }, []);
   const Game = (props: { snake: any; gameOver: any }) => {
     const { snake, gameOver } = props;
-    // Update game logic
 
     return (
       <div>
-        {gameOver && <p>Game Over</p>}
+        {gameOver && <p className="GameOverText">Game Over!!</p>}
         <div
           style={{
             width: CELL_SIZE * GRID_WIDTH,
@@ -208,6 +206,11 @@ const GameLayout = () => {
                   position: "absolute",
                   top: rowIndex * CELL_SIZE,
                   left: colIndex * CELL_SIZE,
+                  borderRadius: snake.some(
+                    (segment: { x: number; y: number }) =>
+                      segment.x === colIndex && segment.y === rowIndex
+                  )
+                    && "35%" 
                 }}
               ></div>
             ))
@@ -236,12 +239,12 @@ const GameLayout = () => {
           <p className="Headings">Use the arrow buttons to control</p>
           <div>
             <div className="FlexConntainer">
-              <div className="Buttons">up</div>
+              <div className="Buttons">Up</div>
             </div>
             <div className="FlexConntainer">
-              <div className="Buttons">left</div>
-              <div className="Buttons">down</div>
-              <div className="Buttons">right</div>
+              <div className="Buttons">Left</div>
+              <div className="Buttons">Down</div>
+              <div className="Buttons">Right</div>
             </div>
             <div className="Startbutton" onClick={() => setStartGame(true)}>
               Start Game ! <img src={logo} height={32} alt="logo" />
